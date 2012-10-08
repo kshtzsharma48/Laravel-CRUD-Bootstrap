@@ -1,0 +1,26 @@
+.form_delete button{
+	background: none;
+	border: none;
+	color: #38678B;
+	text-decoration: underline;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.form_delete {
+	display: inline;
+}
+
+.previous_page.disabled{
+	display: none;
+}
+
+.next_page.disabled{
+	display: none;
+}
+
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
