@@ -18,10 +18,11 @@ class Admin_News_Controller extends Admin_Controller {
 
 	protected function generate_form()
 	{
-		$form = Former::horizontal_open();
+		$form = '<h1>Nieuwsitem</h1>';
+		$form .= Former::horizontal_open();
 		$form .= Former::legend('Wijzig uw nieuwsitem');
 		$form .= Former::xlarge_text('title');
-		$form .= Former::textarea('intro')->rows(10)->columns(20);
+		$form .= Former::textarea('intro')->rows(10)->cols(70);
 		$form .= Former::close();
 
 		return $form;

@@ -16,6 +16,7 @@
 			}
 		</style>
 		<link href="/css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
@@ -34,7 +35,7 @@
 
 	 	<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container-fluid">
+				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -56,41 +57,29 @@
 		</div>
 
 
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span3">
-					<div class="well sidebar-nav">
-						<ul class="nav nav-list">
-							<li class="nav-header">Sidebar</li>
-							<li class="active"><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li class="nav-header">Sidebar</li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li class="nav-header">Sidebar</li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-							<li><a href="#">Link</a></li>
-						</ul>
-					</div><!--/.well -->
-				</div><!--/span-->
-			
-				<div class="span9">
+		<div class="container">
+			<div class="row">
 
-					<? if (isset($status)): ?>
-					<div class="alert alert-<?=$status['type']?>">
-						<button type="button" class="close" data-dismiss="alert">×</button>
-						<?= $status['message'] ?>
+				<section>
+					<div class="span3 bs-docs-sidebar">
+						<ul class="nav nav-list bs-docs-sidenav">
+							<? foreach ($allClasses as $item) : ?>
+							<li<?=($item == $className) ?' class="active"':''?>><a href="/admin/<?=$item?>/index"><i class="icon-chevron-right"></i> <?=ucfirst($item)?></a></li>
+							<? endforeach ?>
 					</div>
-					<? endif ?>
+				</section>
+			
+				<div class="span8">
 
-					<?= $view ?>
+						<? if (isset($status)): ?>
+						<div class="alert alert-<?=$status['type']?>">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<?= $status['message'] ?>
+						</div>
+						<? endif ?>
+
+						<?= $view ?>
+
 				</span> <!-- /container -->
 			</div>
 		</div>

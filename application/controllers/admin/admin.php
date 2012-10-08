@@ -32,7 +32,9 @@ class Admin_Controller extends Base_Controller {
 	{
 		$this->_data = array();
 		$this->_data['gridFields'] = $this->gridFields;
-		$this->_data['className'] = $this->className;
+		$this->_data['className']  = $this->className;
+		$this->_data['allClasses'] = $this->scandir_only_files();	
+			
 	}
 
     /**
@@ -160,6 +162,31 @@ class Admin_Controller extends Base_Controller {
 				'type' => 'success',
 				'message' => '<strong>' . $special . '</strong> is succesvol verwijderd'
 			));
+	}
+
+    /**
+     * scandir_only_files
+     * 
+     * @param mixed $dir Description.
+     *
+     * @access public
+     * @return mixed Value.
+     */
+	public function scandir_only_files( ) {
+
+		$thelist = array();
+   		if ($handle = opendir( realpath( dirname(__FILE__)) )) {
+   			while (false !== ($file = readdir($handle)))
+      		{
+          		if ($file != "." && $file != ".." && $file != 'admin.php') {	
+          			$file = explode('.php', $file);
+          			$thelist[] = $file[0];
+          		}
+       		}
+  			closedir($handle);
+ 	 	}	
+
+ 	 	return $thelist;
 	}
 
 }
