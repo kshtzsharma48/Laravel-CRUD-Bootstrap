@@ -61,22 +61,26 @@
 			<div class="row">
 
 				<section>
-					<div class="span3 bs-docs-sidebar">
-						<ul class="nav nav-list bs-docs-sidenav">
-							<? foreach ($allClasses as $item) : ?>
-							<li<?=($item == $className) ?' class="active"':''?>><a href="/admin/<?=$item?>/index"><i class="icon-chevron-right"></i> <?=ucfirst($item)?></a></li>
-							<? endforeach ?>
+					<div class="span3">
+          				<div class="well sidebar-nav">
+            				<ul class="nav nav-list">
+              					<li class="nav-header">Wat kan ik aanpassen?</li>
+								<? foreach ($allClasses as $item) : ?>
+									<li<?=($item == $className) ?' class="active"':''?>><a href="/admin/<?=$item?>/index"><i class="icon-chevron-right"></i> <?=ucfirst($item)?></a></li>
+								<? endforeach ?>
+            				</ul>
+          				</div>
 					</div>
 				</section>
 			
-				<div class="span8">
+				<div class="span9">
 
-						<? if (isset($status)): ?>
-						<div class="alert alert-<?=$status['type']?>">
-							<button type="button" class="close" data-dismiss="alert">×</button>
-							<?= $status['message'] ?>
-						</div>
-						<? endif ?>
+					<? if (isset($status)): ?>
+					<div class="alert alert-<?=$status['type']?>">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						<?= $status['message'] ?>
+					</div>
+					<? endif ?>
 
 						<?= $view ?>
 
@@ -119,17 +123,13 @@
 	                }]);
 
 				});
-
 				$('#datalist').dataTable( {
 					'sPaginationType': 'bootstrap',
 					"sDom": "<'row'<'span8'l><'span8'f>r>t<'row'<'span8'i><'span8'p>>",
 					 "aoColumnDefs": [ { 'bSortable': false, 'aTargets': $('th#actions').index() } ]
 					}).rowReordering( { 
 						sURL:"",
-						sRequestType: "POST" ,
-						fnAlert: function(text){
-							alert( text) ;
-						}	
+						sRequestType: "POST"
 					}
 				);
 			});

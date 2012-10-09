@@ -60,14 +60,23 @@ class Admin_Controller extends Base_Controller {
 		return View::make('admin.admin', $this->_data);
 	}	
 
+    /**
+     * post_index
+     * 
+     * @access public
+     * @return mixed Value.
+     */
 	public function post_index()
 	{
-
-		echo '<pre>';
-		print_r($_POST);
-		die();
-		
-
+		$class = $this->className;
+		$items = $class::order_by(reset($this->sortField), end($this->sortField))->get();
+			
+		foreach ($items as $key=>$item) {
+			if ($_POST['newList'][$key] != $item->sortorder) {
+				$item->sortorder = $_POST['newList'][$key];
+				$item->save();				
+			}
+		}
 	}
     /**
      * post_form
@@ -85,8 +94,7 @@ class Admin_Controller extends Base_Controller {
 		$data->fill($_POST);
 
 		if (!is_null($id)) {
-			$data->id = $id;
-			$data->is_new( false );
+			$data = $class::find( $id );
 		}
 		
 		$validation = Validator::make($_POST, $this->rules);

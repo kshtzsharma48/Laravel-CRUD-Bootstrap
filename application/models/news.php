@@ -1,9 +1,6 @@
 <?php
 
-class News extends Crud{
+class News extends Eloquent{
 
-	protected static $table = 'news';
-
-	public static $key = 'id';
-
+	public static $table = 'news';
 }

@@ -12192,6 +12192,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
 
 
 (function (a) {
+	
     a.fn.rowReordering = function (b) {
         function c() {
             if (j.fnSettings().oFeatures.bProcessing) {
@@ -12320,6 +12321,12 @@ $.extend( $.fn.dataTableExt.oPagination, {
 				    return $helper;
 				  },
                 cursor: "move",
+			   start: function (e,ui){        // new lines to
+			      $(ui.placeholder).slideUp(); // remove popping
+			    },                             // effect on start
+			    change: function (e,ui){
+			      $(ui.placeholder).hide().slideDown();
+			    },
                 update: function (b, c) {
                     var d = a(this);
                     var e = "tbody tr";
@@ -12337,19 +12344,28 @@ $.extend( $.fn.dataTableExt.oPagination, {
                         f(d, l, 2);
                         return
                     }
+
+                    var list = $('table tr').not(':eq(0)');
+                    var listArr = [];
+				    jQuery.each(list, function(i, val) {
+				    	listArr.push( $(val).attr('id') )
+				    });
+
                     if (l.sURL != null) {
                         l.fnStartProcessingMode();
                         a.ajax({
                             url: l.sURL,
                             type: l.sRequestType,
                             data: {
-                                id: c.item.context.id,
+                                /*id: c.item.context.id,
                                 fromPosition: j.iCurrentPosition,
                                 toPosition: j.iNewPosition,
                                 direction: j.sDirection,
-                                group: i
+                                group: i*/
+                                newList: listArr
                             },
-                            success: function () {
+                            success: function (text) {
+                            	console.log(text);
                                 h(e, j.iCurrentPosition, j.iNewPosition, j.sDirection, c.item.context.id, i);
                                 l.fnEndProcessingMode()
                             },

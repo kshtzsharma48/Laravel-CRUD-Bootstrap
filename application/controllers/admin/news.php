@@ -13,7 +13,7 @@ class Admin_News_Controller extends Admin_Controller {
 		'title'
 	);
 
-	protected $sortField = array('title', 'desc');
+	protected $sortField = array('sortorder', 'desc');
 
 
 	protected function generate_form()

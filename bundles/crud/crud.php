@@ -875,5 +875,27 @@ class Crud implements ArrayAccess
 	{
 		return $results;
 	}
+	
+    /**
+     * order_by
+     * 
+     * @param string $field   Description.
+     * @param string $order   Description.
+     * @param mixed  $columns Description.
+     *
+     * @access public
+     * @static
+     * @return mixed Value.
+     */
+	public static function order_by($field = 'sortorder', $order = 'asc', $columns = array('*'))
+	{
+		$query 	 = with(new static)->query();
+		$results =  $query->order_by($field, $order)->get($columns);
+
+	     foreach ($results as $item) 
+			$models[] = new static($item);
+
+	     return $models;
+	}
 
 }
