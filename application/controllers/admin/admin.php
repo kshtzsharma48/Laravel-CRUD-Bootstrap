@@ -60,6 +60,15 @@ class Admin_Controller extends Base_Controller {
 		return View::make('admin.admin', $this->_data);
 	}	
 
+	public function post_index()
+	{
+
+		echo '<pre>';
+		print_r($_POST);
+		die();
+		
+
+	}
     /**
      * post_form
      * 

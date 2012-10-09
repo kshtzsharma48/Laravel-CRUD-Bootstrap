@@ -11,7 +11,7 @@
     <tbody>
 
         <? foreach ($items as $key=>$item): ?>
-        <tr>
+        <tr data-position="<?=$item->sortorder?>" id="<?=$item->sortorder?>">
             <td><?= ( $key + 1 ) ?></td>
             <? foreach ($gridFields as $field ) : ?>
                 <td><?=$item->$field?></td>
@@ -22,6 +22,6 @@
     		 </td>
         </tr>
    		<? endforeach ?>
-
     </tbody>
+
 </table>

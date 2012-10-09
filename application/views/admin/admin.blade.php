@@ -88,8 +88,9 @@
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> <!-- or use local jquery -->
-		<script src="/js/bootstrap.js"></script>
 		<script src="/js/datatables.js"></script>
+		<script src="http://jquery-datatables-row-reordering.googlecode.com/svn/trunk/media/js/jquery-ui.js"></script>
+		<script src="/js/bootstrap.js"></script>
 		<script src="/js/bootbox.js"></script>
 
 
@@ -123,8 +124,15 @@
 					'sPaginationType': 'bootstrap',
 					"sDom": "<'row'<'span8'l><'span8'f>r>t<'row'<'span8'i><'span8'p>>",
 					 "aoColumnDefs": [ { 'bSortable': false, 'aTargets': $('th#actions').index() } ]
-				});
-			} );
+					}).rowReordering( { 
+						sURL:"",
+						sRequestType: "POST" ,
+						fnAlert: function(text){
+							alert( text) ;
+						}	
+					}
+				);
+			});
 
 
 		</script>

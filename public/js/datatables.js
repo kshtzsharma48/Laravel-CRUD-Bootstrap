@@ -12189,3 +12189,183 @@ $.extend( $.fn.dataTableExt.oPagination, {
         }
     }
 } );
+
+
+(function (a) {
+    a.fn.rowReordering = function (b) {
+        function c() {
+            if (j.fnSettings().oFeatures.bProcessing) {
+                a(".dataTables_processing").css("visibility", "visible")
+            }
+        }
+        function d() {
+            if (j.fnSettings().oFeatures.bProcessing) {
+                a(".dataTables_processing").css("visibility", "hidden")
+            }
+        }
+        function e(b) {
+            var c = 1e6;
+            a(b, j).each(function () {
+                iPosition = parseInt(j.fnGetData(this, l.iIndexColumn));
+                if (iPosition < c) c = iPosition
+            });
+            return c
+        }
+        function f(a, b, c, d) {
+            a.sortable("cancel");
+            if (c <= b.iLogLevel) {
+                if (d != undefined) {
+                    b.fnAlert(d, "")
+                } else {
+                    b.fnAlert("Row cannot be moved", "")
+                }
+            }
+            b.fnEndProcessingMode()
+        }
+        function g(b, c) {
+            var d = a("#" + c);
+            var e = j.fnGetData(d[0], l.iIndexColumn);
+            var f = -1;
+            var g;
+            var h = d.prev(b);
+            if (h.length > 0) {
+                f = parseInt(j.fnGetData(h[0], l.iIndexColumn));
+                if (f < e) {
+                    f = f + 1
+                }
+            } else {
+                var i = d.next(b);
+                if (i.length > 0) {
+                    f = parseInt(j.fnGetData(i[0], l.iIndexColumn));
+                    if (f > e) f = f - 1
+                }
+            }
+            if (f < e) g = "back";
+            else g = "forward";
+            return {
+                sDirection: g,
+                iCurrentPosition: e,
+                iNewPosition: f
+            }
+        }
+        function h(b, c, d, e, f, g) {
+            var h = c;
+            var i = d;
+            if (e == "back") {
+                h = d;
+                i = c
+            }
+            a(j.fnGetNodes()).each(function () {
+                if (g != "" && a(this).attr("data-group") != g) return;
+                var b = this;
+                var c = parseInt(j.fnGetData(b, l.iIndexColumn));
+                if (h <= c && c <= i) {
+                    if (b.id == f) {
+                        j.fnUpdate(d, j.fnGetPosition(b), l.iIndexColumn, false)
+                    } else {
+                        if (e == "back") {
+                            j.fnUpdate(c + 1, j.fnGetPosition(b), l.iIndexColumn, false)
+                        } else {
+                            j.fnUpdate(c - 1, j.fnGetPosition(b), l.iIndexColumn, false)
+                        }
+                    }
+                }
+            });
+            var k = j.fnSettings();
+            if (k.oFeatures.bServerSide === false) {
+                var m = k._iDisplayStart;
+                k.oApi._fnReDraw(k);
+                k._iDisplayStart = m;
+                k.oApi._fnCalculateEnd(k)
+            }
+            k.oApi._fnDraw(k)
+        }
+        function i(a, b) {
+            alert(a)
+        }
+        var j = this;
+        var k = {
+            iIndexColumn: 0,
+            iStartPosition: 1,
+            sURL: null,
+            sRequestType: "POST",
+            iGroupingLevel: 0,
+            fnAlert: i,
+            iLogLevel: 1,
+            sDataGroupAttribute: "data-group",
+            fnStartProcessingMode: c,
+            fnEndProcessingMode: d
+        };
+        var l = a.extend(k, b);
+        var m, n;
+        return this.each(function () {
+            var b = j.fnSettings().aaSortingFixed == null ? new Array : j.fnSettings().aaSortingFixed;
+            b.push([l.iIndexColumn, "asc"]);
+            j.fnSettings().aaSortingFixed = b;
+            for (var c = 0; c < j.fnSettings().aoColumns.length; c++) {
+                j.fnSettings().aoColumns[c].bSortable = false
+            }
+            j.fnDraw();
+            a("tbody", j).sortable({
+
+				helper: function(e, tr)
+				  {
+				    var $originals = tr.children();
+				    var $helper = tr.clone();
+				    $helper.children().each(function(index)
+				    {
+				      // Set helper cell sizes to match the original sizes
+				      $(this).width($originals.eq(index).width())
+				    });
+				    return $helper;
+				  },
+                cursor: "move",
+                update: function (b, c) {
+                    var d = a(this);
+                    var e = "tbody tr";
+                    var i = "";
+                    if (l.bGroupingUsed) {
+                        i = a(c.item).attr(l.sDataGroupAttribute);
+                        if (i == null || i == undefined) {
+                            f(d, l, 3, "Grouping row cannot be moved");
+                            return
+                        }
+                        e = "tbody tr[" + l.sDataGroupAttribute + " ='" + i + "']"
+                    }
+                    var j = g(e, c.item.context.id);
+                    if (j.iNewPosition == -1) {
+                        f(d, l, 2);
+                        return
+                    }
+                    if (l.sURL != null) {
+                        l.fnStartProcessingMode();
+                        a.ajax({
+                            url: l.sURL,
+                            type: l.sRequestType,
+                            data: {
+                                id: c.item.context.id,
+                                fromPosition: j.iCurrentPosition,
+                                toPosition: j.iNewPosition,
+                                direction: j.sDirection,
+                                group: i
+                            },
+                            success: function () {
+                                h(e, j.iCurrentPosition, j.iNewPosition, j.sDirection, c.item.context.id, i);
+                                l.fnEndProcessingMode()
+                            },
+                            error: function (a) {
+                                f(d, l, 1, a.statusText)
+                            }
+                        })
+                    } else {
+                        h(e, j.iCurrentPosition, j.iNewPosition, j.sDirection, c.item.context.id, i)
+                    }
+                }
+            })
+        })
+    }
+})(jQuery)
+ 
+  
+
+
