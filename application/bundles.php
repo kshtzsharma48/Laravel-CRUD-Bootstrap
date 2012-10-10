@@ -36,6 +36,7 @@
 return array(
 
    	'crud' => array('auto' => true),
+   	'nesty' => array('auto' => true),
    	'former' => array('auto' => true),
 	'docs' => array('handles' => 'docs'),
 

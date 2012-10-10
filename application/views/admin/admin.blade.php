@@ -29,6 +29,8 @@
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ico/apple-touch-icon-114-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> <!-- or use local jquery -->
+
 	</head>
 
 	<body>
@@ -91,9 +93,9 @@
 		<!-- Le javascript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> <!-- or use local jquery -->
 		<script src="/js/datatables.js"></script>
 		<script src="http://jquery-datatables-row-reordering.googlecode.com/svn/trunk/media/js/jquery-ui.js"></script>
+		<script src="https://raw.github.com/mjsarfatti/nestedSortable/master/jquery.mjs.nestedSortable.js"></script>
 		<script src="/js/bootstrap.js"></script>
 		<script src="/js/bootbox.js"></script>
 
@@ -132,6 +134,9 @@
 						sRequestType: "POST"
 					}
 				);
+
+
+
 			});
 
 
