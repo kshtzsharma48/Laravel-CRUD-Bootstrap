@@ -1,26 +1,15 @@
-<ol class="sortable">
-		<li id="list_1"><div>Item 1</div>
-			<ol>
-				<li id="list_2"><div>Sub Item 1.1</div>
-				<li id="list_3"><div>Sub Item 1.2</div>
-			</ol>
-		<li id="list_4" class="no-nest"><div>Item 2 (no-nesting)</div>
-		<li id="list_5"><div>Item 3</div>
-			<ol>
-				<li id="list_6" class="no-nest"><div>Sub Item 3.1 (no-nesting)</div>
-				<li id="list_7"><div>Sub Item 3.2</div>
-					<ol>
-						<li id="list_8"><div>Sub Item 3.2.1</div>
-					</ol>
-			</ol>
-		<li id="list_9"><div>Item 4</div>
-		<li id="list_10"><div>Item 5</div>
-	</ol>
+
+<?=$list?>
+	
 <a href="#" id="serialize">Naar array</a>
 <script>
 	$(document).ready(function() {
-		
-		$('ol.sortable').nestedSortable({
+	
+		    jQuery.each($('ol li'), function(i, val) {
+		    	$(this).attr('id', 'list_'+(i+1));
+		    });				   
+
+		$('ol').first().nestedSortable({
 			disableNesting: 'no-nest',
 			forcePlaceholderSize: true,
 			handle: 'div',
@@ -35,9 +24,11 @@
 			toleranceElement: '> div'
 		});
 
+
 		$('#serialize').click(function(){
-			serialized = $('ol.sortable').nestedSortable('serialize');
+			serialized = $('ol').first().nestedSortable('serialize');
 			console.log(serialized);
+			console.log('array');
 		})
 
 

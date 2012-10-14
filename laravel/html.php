@@ -336,12 +336,12 @@ class HTML {
 				}
 				else
 				{
-					$html .= '<li>'.$key.static::listing($type, $value).'</li>';
+					$html .= '<li><div>'.$key.'</div>'.static::listing($type, $value).'</li>';
 				}
 			}
 			else
 			{
-				$html .= '<li>'.static::entities($value).'</li>';
+				$html .= '<li><div>'.static::entities($value).'</div></li>';
 			}
 		}
 
